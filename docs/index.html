@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Randomize Tracker</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+         <style>
+            H1 { text-align: center }
+
+            .link {
+                fill: none;
+                stroke: #ccc;
+                stroke-width: 2px;
+            }
+
+            .node {
+                fill: steelblue;
+                stroke: white;
+                stroke-width: 2px;
+            }
+            .tooltip {
+                position: absolute;
+                padding: 4px 8px;
+                background: black;
+                color: white;
+                border-radius: 4px;
+                font-size: 12px;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.2s;
+                }
+                * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                }
+                body, html {
+                height: 100%;
+                font-family: sans-serif;
+                }
+                
+                .container {
+                display: flex;
+                height: 100vh;
+                width: 100%;
+                }
+
+                .graph-area {
+                flex: 3;
+                background-color: #f0f0f0;
+                padding: 10px;
+                overflow: hidden;
+                }
+
+                .sidebar {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                background-color: #ffffff;
+                border-left: 1px solid #ccc;
+                }
+                .sidebar-header {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 20px;
+                text-align: center;
+                }
+
+                /* List Area */
+                .list-container {
+                flex: 1;
+                overflow-y: auto;
+                padding-right: 5px;
+                margin-bottom: 20px;
+                }
+                .mega-item {
+                background-color: #ddd;
+                border-radius: 6px;
+                padding: 10px;
+                margin-bottom: 12px;
+                }
+
+                .mega-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-weight: bold;
+                margin-bottom: 8px;
+                }
+
+                .mega-title {
+                font-size: 16px;
+                }
+
+                .mega-children {
+                padding-left: 20px;
+                list-style-type: disc;
+                margin: 0;
+                }
+
+                .mega-children li {
+                margin-bottom: 4px;
+                list-style-type: none;
+                }
+                 
+                .list-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #eaeaea;
+                padding: 8px 12px;
+                margin-bottom: 8px;
+                border-radius: 4px;
+                }
+
+                .remove-btn {
+                background: none;
+                border: none;
+                font-size: 16px;
+                cursor: pointer;
+                color: #c00;
+                }
+
+                /* Input & Add Button */
+                .input-container {
+                display: flex;
+                gap: 8px;
+                }
+
+                #search-input {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                }
+
+                #add-button {
+                padding: 8px 12px;
+                border: none;
+                background-color: #007bff;
+                color: white;
+                border-radius: 4px;
+                cursor: pointer;
+                }
+
+                #add-button:hover {
+                background-color: #0056b3;
+                }
+                #results {
+                list-style: none;
+                margin-bottom: 10px;
+                padding: 0;
+                max-height: 200px;
+                overflow-y: auto;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background: #fff;
+                }
+
+                .result-item {
+                display: flex;
+                align-items: center;
+                padding: 8px 12px;
+                border-bottom: 1px solid #eee;
+                cursor: pointer;
+                transition: background 0.2s ease;
+                }
+
+                .result-item:last-child {
+                border-bottom: none;
+                }
+
+                .result-item:hover {
+                background-color: #f5f5f5;
+                }
+
+                .result-image {
+                width: 32px;
+                height: 32px;
+                object-fit: cover;
+                border-radius: 50%;
+                margin-right: 10px;
+                }
+
+                .result-text {
+                font-size: 14px;
+                color: #333;
+                }
+                @media (max-width: 599px) {
+                    .graph-area {
+                        display: none;
+                    }
+                }
+        </style>
+    </head>
+    <body>
+        <div id="tooltip" class="tooltip">
+        </div>
+        <div class="container">
+            <div class="graph-area" id="graph">
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <img id="item-icon">
+                    <h1 id="item-header"></h1>
+                </div>
+                <div class="list-container" id="item-list">
+                </div>
+                <ul id="results"></ul>
+                <div class="input-container">
+                    <input type="text" id="search-input" placeholder="Type to search..." autocomplete="off"/>
+                    <button id="add-button">Add</button>
+                </div>
+            </div>
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>

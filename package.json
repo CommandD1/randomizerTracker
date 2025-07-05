@@ -1,0 +1,19 @@
+{
+  "name": "randomizertracker",
+  "version": "1.0.0",
+  "main": "src/view/main.ts",
+  "scripts": {
+    "esbuild": "npx esbuild src/view/main.ts --watch --outdir=docs --bundle",
+    "dev": "npx ts-node ./src/server/server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/d3": "^7.4.3",
+    "esbuild": "^0.25.5",
+    "fuse.js": "^7.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
