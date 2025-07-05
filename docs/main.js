@@ -70106,10 +70106,11 @@
       }
       select_default2("#graph").select("svg").remove();
       const svg = select_default2(document.getElementById("graph")).append("svg").attr("width", this.width).attr("height", this.height);
+      const depth = getDepth();
       const downG = svg.append("g");
       const downRoot = hierarchy({
         name: id3,
-        children: shortestDownToIdTree(id3, 10)
+        children: shortestDownToIdTree(id3, depth)
       });
       const downTreeLayout = tree_default().nodeSize([this.rectWidth + this.nodeWidthPadding, this.rectHeight + this.nodeHeightPadding]).separation(() => 1);
       downTreeLayout(downRoot);
@@ -70117,7 +70118,7 @@
       const upG = svg.append("g");
       const upRoot = hierarchy({
         name: id3,
-        children: shortestUpToIdTree(id3, 10)
+        children: shortestUpToIdTree(id3, depth)
       });
       const upTreeLayout = tree_default().nodeSize([this.rectWidth + this.nodeWidthPadding, this.rectHeight + this.nodeHeightPadding]).separation(() => 1);
       upTreeLayout(upRoot);
@@ -70139,7 +70140,9 @@
       node.append("rect").attr("width", this.rectWidth).attr("height", this.rectHeight).attr("fill", "#aaaaaa").attr("stroke", "#555").attr("rx", 6).attr("ry", 6);
       const tooltip = select_default2("#tooltip");
       node.append("image").attr("href", (d) => `assets/${imageName(d.data.name)}.png`).attr("x", this.rectWidth / 2 - this.nodePictureSize / 2).attr("y", this.rectHeight / 2 - this.nodePictureSize / 2).attr("width", this.nodePictureSize).attr("height", this.nodePictureSize).on("click", (event, d) => {
-        history.pushState({ id: d.data.name }, "", `?id=${d.data.name}`);
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("id", d.data.name);
+        history.pushState({ id: d.data.name }, "", `?${searchParams.toString()}`);
         updateId(d.data.name);
         this.drawGraph(d.data.name);
       }).on("mouseover", (event, d) => {
@@ -71617,9 +71620,19 @@
     if (searchParams.has("id")) {
       id3 = searchParams.get("id");
     } else {
-      window.location.href = window.location.pathname + `?id=${id3}`;
+      searchParams.set("id", id3);
+      window.location.href = window.location.pathname + "?" + searchParams.toString();
     }
     return id3;
+  }
+  function getDepth() {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has("depth")) {
+      let depth = searchParams.get("depth");
+      if (depth === null) return 5;
+      return Number(depth);
+    }
+    return 5;
   }
   var id2 = getUrlId();
   var tree = new doubleTree(id2);
@@ -71641,7 +71654,9 @@
     }
   });
   function setId(id3) {
-    history.pushState({ id: id3 }, "", `?id=${id3}`);
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set("id", id3);
+    history.pushState({ id: id3 }, "", `?${searchParams.toString()}`);
     updateId(id3);
     tree.drawGraph(id3);
   }

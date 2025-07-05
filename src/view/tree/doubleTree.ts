@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { Id, idToText } from "../object/id";
 import { connectionTree, shortestDownToIdTree, connectionTreeChildren, shortestUpToIdTree } from "./connectionTree";
 import { Process } from "../connection/process";
-import { updateId } from "../main";
+import { getDepth, updateId } from "../main";
 import { Names } from "../connection/links";
 import { imageName } from "../imageName";
 export interface TreeNode {
@@ -35,11 +35,11 @@ export class doubleTree{
             .append("svg")
             .attr("width", this.width)
             .attr("height", this.height);
-            
+        const depth = getDepth()
         const downG = svg.append("g")
         const downRoot = d3.hierarchy({
             name:id,
-            children:shortestDownToIdTree(id,10)
+            children:shortestDownToIdTree(id,depth)
         } as TreeNode);
         const downTreeLayout = d3.tree<TreeNode>()
         .nodeSize([this.rectWidth + this.nodeWidthPadding, this.rectHeight + this.nodeHeightPadding])
@@ -50,7 +50,7 @@ export class doubleTree{
         const upG = svg.append("g")
         const upRoot = d3.hierarchy({
             name: id,
-            children: shortestUpToIdTree(id,10)
+            children: shortestUpToIdTree(id,depth)
         } as TreeNode);
         const upTreeLayout = d3.tree<TreeNode>()
         .nodeSize([this.rectWidth + this.nodeWidthPadding, this.rectHeight + this.nodeHeightPadding])
@@ -128,7 +128,9 @@ export class doubleTree{
             })
                 */
             .on("click",(event,d)=>{
-                history.pushState({id:d.data.name}, "", `?id=${d.data.name}`);
+                const searchParams = new URLSearchParams(window.location.search)
+                searchParams.set("id",d.data.name)
+                history.pushState({id:d.data.name}, "", `?${searchParams.toString()}`);
                 updateId(d.data.name)
                 this.drawGraph(d.data.name)
             })

@@ -25,9 +25,19 @@ function getUrlId():Id{
     if(searchParams.has("id")){
         id = searchParams.get("id") as Id;
     }else{
-        window.location.href = window.location.pathname + `?id=${id}`;
+        searchParams.set("id",id)
+        window.location.href = window.location.pathname + '?' + searchParams.toString();
     }
     return id
+}
+export function getDepth():number{
+  const searchParams = new URLSearchParams(window.location.search);
+  if(searchParams.has("depth")){
+    let depth = searchParams.get("depth");
+    if(depth===null)return 5
+    return Number(depth)
+  }
+  return 5;
 }
 const id = getUrlId()
 const tree = new doubleTree(id);
@@ -49,7 +59,9 @@ Object.keys(entityLoot).forEach(key=>{
   }
 })
 export function setId(id:Id){
-  history.pushState({id}, "", `?id=${id}`);
+  const searchParams = new URLSearchParams(window.location.search)
+  searchParams.set("id",id)
+  history.pushState({id}, "", `?${searchParams.toString()}`);
   updateId(id)
   tree.drawGraph(id)
 }
