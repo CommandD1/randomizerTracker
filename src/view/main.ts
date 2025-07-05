@@ -74,6 +74,7 @@ window.addEventListener("popstate",(event)=>{
   tree.drawGraph(id)
   updateId(id)
 })
+console.log(imageName("pig"))
 /*
 interface TreeNode {
   id: string;

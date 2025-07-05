@@ -71683,4 +71683,5 @@
     tree.drawGraph(id3);
     updateId(id3);
   });
+  console.log(imageName("pig"));
 })();
