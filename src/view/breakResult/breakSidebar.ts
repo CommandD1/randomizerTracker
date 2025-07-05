@@ -10,6 +10,7 @@ import { isItem } from "../object/itemNames";
 import { chestLoot, ChestName, isChest } from "../transformation/chestLoot";
 import { chestItemLoot } from "../connection/chests";
 import { addLink, Names, removeLink } from "../connection/links";
+import { imageName } from "../imageName";
 export class breakSidebar{
   input:HTMLInputElement = document.getElementById('search-input') as HTMLInputElement;
   resultsList:HTMLUListElement = document.getElementById('results') as HTMLUListElement;
@@ -51,13 +52,12 @@ export class breakSidebar{
     results.slice(0, 5).forEach(item => {
       const li = document.createElement('li');
       li.classList.add('result-item');
-      const img = createIcon(item.item as Id);
-      if(isBlock(item.item)||isItem(item.item)){
-        img.onclick = ()=>{
-          setId(item.item as Id)
-        }
-        li.appendChild(img);
+      const img = createIcon(imageName(item.item as Names) as Id);
+      img.onclick = ()=>{
+        setId(item.item as Id)
       }
+      li.appendChild(img);
+      
       const span = document.createElement("span");
       span.className = "result-text"
       span.textContent = item.item;

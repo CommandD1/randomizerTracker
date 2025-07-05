@@ -3,7 +3,7 @@ import { BlockName } from "../object/blockNames"
 import { Id } from "../object/id"
 import { ItemName, itemNames } from "../object/itemNames"
 import { ChestName } from "../transformation/chestLoot"
-import { EntityName } from "../transformation/entityLoot"
+import { entityLoot, EntityName, isEntity } from "../transformation/entityLoot"
 import { placement } from "../transformation/place"
 import { useItem } from "../transformation/useItem"
 import { useTool } from "../transformation/useTool"
@@ -80,11 +80,13 @@ chestItemLoot.forEach((items,chest)=>{
         })
     })
 })
-entityItemLoot.forEach((items,entity)=>{
-    items.forEach(item=>{
-        cookieMap.get(item).forEach(drop=>{
-            mirrorLinks(entity,drop as Id,"killEntity",item);
-        })
+Object.keys(entityLoot).forEach((entity)=>{
+    cookieMap.get(entity).forEach(drop=>{
+        if(isEntity(drop)){
+            (entityItemLoot.get(drop)??[]).forEach(item=>{
+                mirrorLinks(entity as EntityName,item as Id,"killEntity");
+            })
+        }
     })
 })
 export function addLink(itemName:Id,drop:Id){
@@ -98,11 +100,6 @@ export function addLink(itemName:Id,drop:Id){
     chestItemLoot.forEach((items,chest)=>{
         if(items.includes(drop as ItemName)){
             mirrorLinks(chest,drop,"lootChest",itemName);
-        }
-    })
-    entityItemLoot.forEach((items,entity)=>{
-        if(items.includes(drop as ItemName)){
-            mirrorLinks(entity,drop,"killEntity",itemName);
         }
     })
 }

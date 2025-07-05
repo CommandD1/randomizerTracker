@@ -69961,11 +69961,13 @@
       });
     });
   });
-  entityItemLoot.forEach((items, entity) => {
-    items.forEach((item) => {
-      cookieMap2.get(item).forEach((drop) => {
-        mirrorLinks(entity, drop, "killEntity", item);
-      });
+  Object.keys(entityLoot).forEach((entity) => {
+    cookieMap2.get(entity).forEach((drop) => {
+      if (isEntity(drop)) {
+        (entityItemLoot.get(drop) ?? []).forEach((item) => {
+          mirrorLinks(entity, item, "killEntity");
+        });
+      }
     });
   });
   function addLink(itemName, drop) {
@@ -69979,11 +69981,6 @@
     chestItemLoot.forEach((items, chest) => {
       if (items.includes(drop)) {
         mirrorLinks(chest, drop, "lootChest", itemName);
-      }
-    });
-    entityItemLoot.forEach((items, entity) => {
-      if (items.includes(drop)) {
-        mirrorLinks(entity, drop, "killEntity", itemName);
       }
     });
   }
@@ -71543,13 +71540,11 @@
         (item) => {
           const li = document.createElement("li");
           li.classList.add("result-item");
-          const img = createIcon(item.item);
-          if (isBlock(item.item) || isItem(item.item)) {
-            img.onclick = () => {
-              setId(item.item);
-            };
-            li.appendChild(img);
-          }
+          const img = createIcon(imageName(item.item));
+          img.onclick = () => {
+            setId(item.item);
+          };
+          li.appendChild(img);
           const span = document.createElement("span");
           span.className = "result-text";
           span.textContent = item.item;
