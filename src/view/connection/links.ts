@@ -90,6 +90,21 @@ entityItemLoot.forEach((items,entity)=>{
 export function addLink(itemName:Id,drop:Id){
     mirrorLinks(itemName,drop,"transform");
     mirrorLinks(itemName,drop as Id,"breakBlock",itemName);
+    blockItemDrops.forEach((items,block)=>{
+        if(items.includes(drop as ItemName)){
+            mirrorLinks(block,drop,"breakBlock",itemName);
+        }
+    })
+    chestItemLoot.forEach((items,chest)=>{
+        if(items.includes(drop as ItemName)){
+            mirrorLinks(chest,drop,"lootChest",itemName);
+        }
+    })
+    entityItemLoot.forEach((items,entity)=>{
+        if(items.includes(drop as ItemName)){
+            mirrorLinks(entity,drop,"killEntity",itemName);
+        }
+    })
 }
 export function removeLink(itemName:Id,drop:Id){
     let up = links.get(drop)?.up

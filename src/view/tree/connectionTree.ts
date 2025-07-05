@@ -51,9 +51,13 @@ export function connectionTreeChildren(id:Id,depth:number,visited?:Set<Id>):Tree
 function linkColor(process:Process){
     switch(process){
         case "breakBlock":
-            return "#00cc00";
+            return "#00bb00";
         case "transform":
-            return "#0000cc"
+            return "#0000bb";
+        case "lootChest":
+            return "#bbbb00";
+        case "killEntity":
+            return "#bb0000";
         default:
             return ""
     }

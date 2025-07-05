@@ -69971,6 +69971,21 @@
   function addLink(itemName, drop) {
     mirrorLinks(itemName, drop, "transform");
     mirrorLinks(itemName, drop, "breakBlock", itemName);
+    blockItemDrops.forEach((items, block) => {
+      if (items.includes(drop)) {
+        mirrorLinks(block, drop, "breakBlock", itemName);
+      }
+    });
+    chestItemLoot.forEach((items, chest) => {
+      if (items.includes(drop)) {
+        mirrorLinks(chest, drop, "lootChest", itemName);
+      }
+    });
+    entityItemLoot.forEach((items, entity) => {
+      if (items.includes(drop)) {
+        mirrorLinks(entity, drop, "killEntity", itemName);
+      }
+    });
   }
   function removeLink(itemName, drop) {
     let up = links.get(drop)?.up;
@@ -69996,9 +70011,13 @@
   function linkColor(process) {
     switch (process) {
       case "breakBlock":
-        return "#00cc00";
+        return "#00bb00";
       case "transform":
-        return "#0000cc";
+        return "#0000bb";
+      case "lootChest":
+        return "#bbbb00";
+      case "killEntity":
+        return "#bb0000";
       default:
         return "";
     }
