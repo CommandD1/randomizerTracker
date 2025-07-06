@@ -19,6 +19,28 @@ import { createIcon } from "./display/icon";
 import { entityLoot } from "./transformation/entityLoot";
 import { links, Names } from "./connection/links";
 import { imageName } from "./imageName";
+const key = "break";
+
+// Check if the key is already in localStorage
+if (!localStorage.getItem(key)) {
+  // Fetch the JSON file and store its contents
+  fetch("data.json")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to load JSON file");
+      }
+      return response.json();
+    })
+    .then(data => {
+      localStorage.setItem(key, JSON.stringify(data));
+      console.log("Default JSON loaded into localStorage");
+    })
+    .catch(error => {
+      console.error("Error loading JSON file:", error);
+    });
+} else {
+  console.log("Data already exists in localStorage");
+}
 function getUrlId():Id{
   let id:Id = "stone";
     const searchParams = new URLSearchParams(window.location.search);

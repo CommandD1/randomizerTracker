@@ -2784,11 +2784,11 @@
       }
     }
   }
-  function bindKey(parent, group, enter, update, exit, data, key) {
+  function bindKey(parent, group, enter, update, exit, data, key2) {
     var i, node, nodeByKeyValue = /* @__PURE__ */ new Map(), groupLength = group.length, dataLength = data.length, keyValues = new Array(groupLength), keyValue;
     for (i = 0; i < groupLength; ++i) {
       if (node = group[i]) {
-        keyValues[i] = keyValue = key.call(node, node.__data__, i, group) + "";
+        keyValues[i] = keyValue = key2.call(node, node.__data__, i, group) + "";
         if (nodeByKeyValue.has(keyValue)) {
           exit[i] = node;
         } else {
@@ -2797,7 +2797,7 @@
       }
     }
     for (i = 0; i < dataLength; ++i) {
-      keyValue = key.call(parent, data[i], i, data) + "";
+      keyValue = key2.call(parent, data[i], i, data) + "";
       if (node = nodeByKeyValue.get(keyValue)) {
         update[i] = node;
         node.__data__ = data[i];
@@ -2815,13 +2815,13 @@
   function datum(node) {
     return node.__data__;
   }
-  function data_default(value, key) {
+  function data_default(value, key2) {
     if (!arguments.length) return Array.from(this, datum);
-    var bind = key ? bindKey : bindIndex, parents = this._parents, groups = this._groups;
+    var bind = key2 ? bindKey : bindIndex, parents = this._parents, groups = this._groups;
     if (typeof value !== "function") value = constant_default(value);
     for (var m = groups.length, update = new Array(m), enter = new Array(m), exit = new Array(m), j = 0; j < m; ++j) {
       var parent = parents[j], group = groups[j], groupLength = group.length, data = arraylike(value.call(parent, parent && parent.__data__, j, parents)), dataLength = data.length, enterGroup = enter[j] = new Array(dataLength), updateGroup = update[j] = new Array(dataLength), exitGroup = exit[j] = new Array(groupLength);
-      bind(parent, group, enterGroup, updateGroup, exitGroup, data, key);
+      bind(parent, group, enterGroup, updateGroup, exitGroup, data, key2);
       for (var i0 = 0, i1 = 0, previous, next; i0 < dataLength; ++i0) {
         if (previous = enterGroup[i0]) {
           if (i0 >= i1) i1 = i0 + 1;
@@ -3438,7 +3438,7 @@
   }
   function extend(parent, definition) {
     var prototype = Object.create(parent.prototype);
-    for (var key in definition) prototype[key] = definition[key];
+    for (var key2 in definition) prototype[key2] = definition[key2];
     return prototype;
   }
 
@@ -4454,12 +4454,12 @@
     return tween;
   }
   function attrTween_default(name, value) {
-    var key = "attr." + name;
-    if (arguments.length < 2) return (key = this.tween(key)) && key._value;
-    if (value == null) return this.tween(key, null);
+    var key2 = "attr." + name;
+    if (arguments.length < 2) return (key2 = this.tween(key2)) && key2._value;
+    if (value == null) return this.tween(key2, null);
     if (typeof value !== "function") throw new Error();
     var fullname = namespace_default(name);
-    return this.tween(key, (fullname.local ? attrTweenNS : attrTween)(fullname, value));
+    return this.tween(key2, (fullname.local ? attrTweenNS : attrTween)(fullname, value));
   }
 
   // ../node_modules/d3-transition/src/transition/delay.js
@@ -4652,9 +4652,9 @@
     };
   }
   function styleMaybeRemove(id3, name) {
-    var on0, on1, listener0, key = "style." + name, event = "end." + key, remove2;
+    var on0, on1, listener0, key2 = "style." + name, event = "end." + key2, remove2;
     return function() {
-      var schedule = set2(this, id3), on = schedule.on, listener = schedule.value[key] == null ? remove2 || (remove2 = styleRemove2(name)) : void 0;
+      var schedule = set2(this, id3), on = schedule.on, listener = schedule.value[key2] == null ? remove2 || (remove2 = styleRemove2(name)) : void 0;
       if (on !== on0 || listener0 !== listener) (on1 = (on0 = on).copy()).on(event, listener0 = listener);
       schedule.on = on1;
     };
@@ -4681,11 +4681,11 @@
     return tween;
   }
   function styleTween_default(name, value, priority) {
-    var key = "style." + (name += "");
-    if (arguments.length < 2) return (key = this.tween(key)) && key._value;
-    if (value == null) return this.tween(key, null);
+    var key2 = "style." + (name += "");
+    if (arguments.length < 2) return (key2 = this.tween(key2)) && key2._value;
+    if (value == null) return this.tween(key2, null);
     if (typeof value !== "function") throw new Error();
-    return this.tween(key, styleTween(name, value, priority == null ? "" : priority));
+    return this.tween(key2, styleTween(name, value, priority == null ? "" : priority));
   }
 
   // ../node_modules/d3-transition/src/transition/text.js
@@ -4721,11 +4721,11 @@
     return tween;
   }
   function textTween_default(value) {
-    var key = "text";
-    if (arguments.length < 1) return (key = this.tween(key)) && key._value;
-    if (value == null) return this.tween(key, null);
+    var key2 = "text";
+    if (arguments.length < 1) return (key2 = this.tween(key2)) && key2._value;
+    if (value == null) return this.tween(key2, null);
     if (typeof value !== "function") throw new Error();
-    return this.tween(key, textTween(value));
+    return this.tween(key2, textTween(value));
   }
 
   // ../node_modules/d3-transition/src/transition/transition.js
@@ -5690,10 +5690,10 @@
         }
         return this;
       },
-      zoom: function(key, transform2) {
-        if (this.mouse && key !== "mouse") this.mouse[1] = transform2.invert(this.mouse[0]);
-        if (this.touch0 && key !== "touch") this.touch0[1] = transform2.invert(this.touch0[0]);
-        if (this.touch1 && key !== "touch") this.touch1[1] = transform2.invert(this.touch1[0]);
+      zoom: function(key2, transform2) {
+        if (this.mouse && key2 !== "mouse") this.mouse[1] = transform2.invert(this.mouse[0]);
+        if (this.touch0 && key2 !== "touch") this.touch0[1] = transform2.invert(this.touch0[0]);
+        if (this.touch1 && key2 !== "touch") this.touch1[1] = transform2.invert(this.touch1[0]);
         this.that.__zoom = transform2;
         this.emit("zoom");
         return this;
@@ -5910,9 +5910,9 @@
       try {
         const obj = JSON.parse(raw);
         const map = /* @__PURE__ */ new Map();
-        for (const key in obj) {
-          if (Array.isArray(obj[key])) {
-            map.set(key, obj[key]);
+        for (const key2 in obj) {
+          if (Array.isArray(obj[key2])) {
+            map.set(key2, obj[key2]);
           }
         }
         return map;
@@ -5922,43 +5922,43 @@
     }
     saveMap(map) {
       const obj = {};
-      for (const [key, values] of map.entries()) {
-        obj[key] = values;
+      for (const [key2, values] of map.entries()) {
+        obj[key2] = values;
       }
       localStorage.setItem(this.key, JSON.stringify(obj));
     }
-    add(key, value) {
+    add(key2, value) {
       const map = this.loadMap();
-      const values = map.get(key) || [];
+      const values = map.get(key2) || [];
       if (!values.includes(value)) {
         values.push(value);
-        map.set(key, values);
+        map.set(key2, values);
         this.saveMap(map);
       }
     }
-    remove(key, value) {
+    remove(key2, value) {
       const map = this.loadMap();
-      const values = map.get(key);
+      const values = map.get(key2);
       if (!values) return;
       const index = values.indexOf(value);
       if (index !== -1) {
         values.splice(index, 1);
         if (values.length === 0) {
-          map.delete(key);
+          map.delete(key2);
         } else {
-          map.set(key, values);
+          map.set(key2, values);
         }
         this.saveMap(map);
       }
     }
-    has(key, value) {
+    has(key2, value) {
       const map = this.loadMap();
-      const values = map.get(key);
+      const values = map.get(key2);
       return values ? values.includes(value) : false;
     }
-    get(key) {
+    get(key2) {
       const map = this.loadMap();
-      return map.get(key) || [];
+      return map.get(key2) || [];
     }
     keys() {
       return Array.from(this.loadMap().keys());
@@ -5966,8 +5966,8 @@
     toObject() {
       const map = this.loadMap();
       const obj = {};
-      for (const [key, value] of map.entries()) {
-        obj[key] = value;
+      for (const [key2, value] of map.entries()) {
+        obj[key2] = value;
       }
       return obj;
     }
@@ -51700,7 +51700,7 @@
 
   // src/view/connection/chests.ts
   var chestItemLoot = /* @__PURE__ */ new Map();
-  Object.entries(chestLoot).forEach(([key, value]) => {
+  Object.entries(chestLoot).forEach(([key2, value]) => {
     let loot = [];
     if ("pools" in value) {
       for (let pool of value.pools) {
@@ -51719,7 +51719,7 @@
         }
       }
     }
-    chestItemLoot.set(key, loot);
+    chestItemLoot.set(key2, loot);
   });
 
   // src/view/transformation/place.ts
@@ -69882,7 +69882,7 @@
 
   // src/view/connection/entities.ts
   var entityItemLoot = /* @__PURE__ */ new Map();
-  Object.entries(entityLoot).forEach(([key, value]) => {
+  Object.entries(entityLoot).forEach(([key2, value]) => {
     let loot = [];
     if ("pools" in value) {
       for (let pool of value.pools) {
@@ -69901,7 +69901,7 @@
         }
       }
     }
-    entityItemLoot.set(key, loot);
+    entityItemLoot.set(key2, loot);
   });
 
   // src/view/connection/variableConnections.ts
@@ -70265,24 +70265,24 @@
     return value == null ? value === void 0 ? "[object Undefined]" : "[object Null]" : Object.prototype.toString.call(value);
   }
   var INCORRECT_INDEX_TYPE = "Incorrect 'index' type";
-  var LOGICAL_SEARCH_INVALID_QUERY_FOR_KEY = (key) => `Invalid value for key ${key}`;
+  var LOGICAL_SEARCH_INVALID_QUERY_FOR_KEY = (key2) => `Invalid value for key ${key2}`;
   var PATTERN_LENGTH_TOO_LARGE = (max2) => `Pattern length exceeds max of ${max2}.`;
   var MISSING_KEY_PROPERTY = (name) => `Missing ${name} property in key`;
-  var INVALID_KEY_WEIGHT_VALUE = (key) => `Property 'weight' in key '${key}' must be a positive integer`;
+  var INVALID_KEY_WEIGHT_VALUE = (key2) => `Property 'weight' in key '${key2}' must be a positive integer`;
   var hasOwn = Object.prototype.hasOwnProperty;
   var KeyStore = class {
     constructor(keys) {
       this._keys = [];
       this._keyMap = {};
       let totalWeight = 0;
-      keys.forEach((key) => {
-        let obj = createKey(key);
+      keys.forEach((key2) => {
+        let obj = createKey(key2);
         this._keys.push(obj);
         this._keyMap[obj.id] = obj;
         totalWeight += obj.weight;
       });
-      this._keys.forEach((key) => {
-        key.weight /= totalWeight;
+      this._keys.forEach((key2) => {
+        key2.weight /= totalWeight;
       });
     }
     get(keyId) {
@@ -70295,39 +70295,39 @@
       return JSON.stringify(this._keys);
     }
   };
-  function createKey(key) {
+  function createKey(key2) {
     let path2 = null;
     let id3 = null;
     let src = null;
     let weight = 1;
     let getFn = null;
-    if (isString(key) || isArray(key)) {
-      src = key;
-      path2 = createKeyPath(key);
-      id3 = createKeyId(key);
+    if (isString(key2) || isArray(key2)) {
+      src = key2;
+      path2 = createKeyPath(key2);
+      id3 = createKeyId(key2);
     } else {
-      if (!hasOwn.call(key, "name")) {
+      if (!hasOwn.call(key2, "name")) {
         throw new Error(MISSING_KEY_PROPERTY("name"));
       }
-      const name = key.name;
+      const name = key2.name;
       src = name;
-      if (hasOwn.call(key, "weight")) {
-        weight = key.weight;
+      if (hasOwn.call(key2, "weight")) {
+        weight = key2.weight;
         if (weight <= 0) {
           throw new Error(INVALID_KEY_WEIGHT_VALUE(name));
         }
       }
       path2 = createKeyPath(name);
       id3 = createKeyId(name);
-      getFn = key.getFn;
+      getFn = key2.getFn;
     }
     return { path: path2, id: id3, weight, src, getFn };
   }
-  function createKeyPath(key) {
-    return isArray(key) ? key : key.split(".");
+  function createKeyPath(key2) {
+    return isArray(key2) ? key2 : key2.split(".");
   }
-  function createKeyId(key) {
-    return isArray(key) ? key.join(".") : key;
+  function createKeyId(key2) {
+    return isArray(key2) ? key2.join(".") : key2;
   }
   function get3(obj, path2) {
     let list = [];
@@ -70339,8 +70339,8 @@
       if (!path3[index]) {
         list.push(obj2);
       } else {
-        let key = path3[index];
-        const value = obj2[key];
+        let key2 = path3[index];
+        const value = obj2[key2];
         if (!isDefined(value)) {
           return;
         }
@@ -70460,8 +70460,8 @@
     setKeys(keys = []) {
       this.keys = keys;
       this._keysMap = {};
-      keys.forEach((key, idx) => {
-        this._keysMap[key.id] = idx;
+      keys.forEach((key2, idx) => {
+        this._keysMap[key2.id] = idx;
       });
     }
     create() {
@@ -70515,8 +70515,8 @@
     }
     _addObject(doc, docIndex) {
       let record = { i: docIndex, $: {} };
-      this.keys.forEach((key, keyIndex) => {
-        let value = key.getFn ? key.getFn(doc) : this.getFn(doc, key.path);
+      this.keys.forEach((key2, keyIndex) => {
+        let value = key2.getFn ? key2.getFn(doc) : this.getFn(doc, key2.path);
         if (!isDefined(value)) {
           return;
         }
@@ -71229,8 +71229,8 @@
   var isPath = (query) => !!query[KeyType.PATH];
   var isLeaf = (query) => !isArray(query) && isObject(query) && !isExpression(query);
   var convertToExplicit = (query) => ({
-    [LogicalOperator.AND]: Object.keys(query).map((key) => ({
-      [key]: query[key]
+    [LogicalOperator.AND]: Object.keys(query).map((key2) => ({
+      [key2]: query[key2]
     }))
   });
   function parse(query, options, { auto = true } = {}) {
@@ -71241,13 +71241,13 @@
         return next(convertToExplicit(query2));
       }
       if (isLeaf(query2)) {
-        const key = isQueryPath ? query2[KeyType.PATH] : keys[0];
-        const pattern = isQueryPath ? query2[KeyType.PATTERN] : query2[key];
+        const key2 = isQueryPath ? query2[KeyType.PATH] : keys[0];
+        const pattern = isQueryPath ? query2[KeyType.PATTERN] : query2[key2];
         if (!isString(pattern)) {
-          throw new Error(LOGICAL_SEARCH_INVALID_QUERY_FOR_KEY(key));
+          throw new Error(LOGICAL_SEARCH_INVALID_QUERY_FOR_KEY(key2));
         }
         const obj = {
-          keyId: createKeyId(key),
+          keyId: createKeyId(key2),
           pattern
         };
         if (auto) {
@@ -71259,8 +71259,8 @@
         children: [],
         operator: keys[0]
       };
-      keys.forEach((key) => {
-        const value = query2[key];
+      keys.forEach((key2) => {
+        const value = query2[key2];
         if (isArray(value)) {
           value.forEach((item) => {
             node.children.push(next(item));
@@ -71277,8 +71277,8 @@
   function computeScore(results, { ignoreFieldNorm = Config.ignoreFieldNorm }) {
     results.forEach((result) => {
       let totalScore = 1;
-      result.matches.forEach(({ key, norm: norm2, score }) => {
-        const weight = key ? key.weight : null;
+      result.matches.forEach(({ key: key2, norm: norm2, score }) => {
+        const weight = key2 ? key2.weight : null;
         totalScore *= Math.pow(
           score === 0 && weight ? Number.EPSILON : score,
           (weight || 1) * (ignoreFieldNorm ? 1 : norm2)
@@ -71482,10 +71482,10 @@
           return;
         }
         let matches = [];
-        keys.forEach((key, keyIndex) => {
+        keys.forEach((key2, keyIndex) => {
           matches.push(
             ...this._findMatches({
-              key,
+              key: key2,
               value: item[keyIndex],
               searcher
             })
@@ -71501,7 +71501,7 @@
       });
       return results;
     }
-    _findMatches({ key, value, searcher }) {
+    _findMatches({ key: key2, value, searcher }) {
       if (!isDefined(value)) {
         return [];
       }
@@ -71515,7 +71515,7 @@
           if (isMatch) {
             matches.push({
               score,
-              key,
+              key: key2,
               value: text,
               idx,
               norm: norm2,
@@ -71527,7 +71527,7 @@
         const { v: text, n: norm2 } = value;
         const { isMatch, score, indices } = searcher.searchIn(text);
         if (isMatch) {
-          matches.push({ score, key, value: text, norm: norm2, indices });
+          matches.push({ score, key: key2, value: text, norm: norm2, indices });
         }
       }
       return matches;
@@ -71684,6 +71684,22 @@
   };
 
   // src/view/main.ts
+  var key = "break";
+  if (!localStorage.getItem(key)) {
+    fetch("data.json").then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to load JSON file");
+      }
+      return response.json();
+    }).then((data) => {
+      localStorage.setItem(key, JSON.stringify(data));
+      console.log("Default JSON loaded into localStorage");
+    }).catch((error) => {
+      console.error("Error loading JSON file:", error);
+    });
+  } else {
+    console.log("Data already exists in localStorage");
+  }
   function getUrlId() {
     let id3 = "stone";
     const searchParams = new URLSearchParams(window.location.search);
@@ -71718,9 +71734,9 @@
     header.appendChild(img);
     header.textContent = idToText(id3);
   }
-  Object.keys(entityLoot).forEach((key) => {
-    if (itemNames.includes(key)) {
-      console.log(key);
+  Object.keys(entityLoot).forEach((key2) => {
+    if (itemNames.includes(key2)) {
+      console.log(key2);
     }
   });
   function setId(id3) {
