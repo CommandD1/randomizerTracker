@@ -51871,7 +51871,30 @@
     ["oxidized_cut_copper_stairs", "axe", "weathered_cut_copper_stairs"],
     ["weathered_cut_copper_stairs", "axe", "exposed_cut_copper_stairs"],
     ["exposed_cut_copper_stairs", "axe", "cut_copper_stairs"],
-    ["coarse_dirt", "hoe", "dirt"]
+    ["coarse_dirt", "hoe", "dirt"],
+    ["acacia_log", "axe", "stripped_acacia_log"],
+    ["acacia_wood", "axe", "stripped_acacia_wood"],
+    ["bamboo_block", "axe", "stripped_bamboo_block"],
+    ["birch_log", "axe", "stripped_birch_log"],
+    ["birch_wood", "axe", "stripped_birch_wood"],
+    ["cherry_log", "axe", "stripped_cherry_log"],
+    ["cherry_wood", "axe", "stripped_cherry_wood"],
+    ["crimson_hyphae", "axe", "stripped_crimson_hyphae"],
+    ["crimson_stem", "axe", "stripped_crimson_stem"],
+    ["dark_oak_log", "axe", "stripped_dark_oak_log"],
+    ["dark_oak_wood", "axe", "stripped_dark_oak_wood"],
+    ["jungle_log", "axe", "stripped_jungle_log"],
+    ["jungle_wood", "axe", "stripped_jungle_wood"],
+    ["mangrove_log", "axe", "stripped_mangrove_log"],
+    ["mangrove_wood", "axe", "stripped_mangrove_wood"],
+    ["oak_log", "axe", "stripped_oak_log"],
+    ["oak_wood", "axe", "stripped_oak_wood"],
+    ["pale_oak_log", "axe", "stripped_pale_oak_log"],
+    ["pale_oak_wood", "axe", "stripped_pale_oak_wood"],
+    ["spruce_log", "axe", "stripped_spruce_log"],
+    ["spruce_wood", "axe", "stripped_spruce_wood"],
+    ["warped_hyphae", "axe", "stripped_warped_hyphae"],
+    ["warped_stem", "axe", "stripped_warped_stem"]
     //todo
   ];
 
@@ -69897,12 +69920,39 @@
     breakBlock: [],
     place: [],
     useItem: [],
+    changeBlock: [],
     transform: [],
     killEntity: [],
     lootChest: [],
     axe: ["netherite_axe", "diamond_axe", "golden_axe", "iron_axe", "stone_axe", "wooden_axe"],
     hoe: ["netherite_hoe", "diamond_hoe", "golden_hoe", "iron_hoe", "stone_hoe", "wooden_hoe"]
   };
+
+  // src/view/transformation/blockChange.ts
+  var blockChange = [
+    ["anvil", "air", "chipped_anvil"],
+    ["chipped_anvil", "air", "damaged_anvil"],
+    ["red_concrete_powder", "water", "red_concrete"],
+    ["blue_concrete_powder", "water", "blue_concrete"],
+    ["cyan_concrete_powder", "water", "cyan_concrete"],
+    ["gray_concrete_powder", "water", "gray_concrete"],
+    ["lime_concrete_powder", "water", "lime_concrete"],
+    ["pink_concrete_powder", "water", "pink_concrete"],
+    ["black_concrete_powder", "water", "black_concrete"],
+    ["brown_concrete_powder", "water", "brown_concrete"],
+    ["green_concrete_powder", "water", "green_concrete"],
+    ["white_concrete_powder", "water", "white_concrete"],
+    ["orange_concrete_powder", "water", "orange_concrete"],
+    ["purple_concrete_powder", "water", "purple_concrete"],
+    ["yellow_concrete_powder", "water", "yellow_concrete"],
+    ["magenta_concrete_powder", "water", "magenta_concrete"],
+    ["light_blue_concrete_powder", "water", "light_blue_concrete"],
+    ["light_gray_concrete_powder", "water", "light_gray_concrete"],
+    ["melon_stem", "melon", "attached_melon_stem"],
+    ["pumpkin_stem", "pumpkin", "attached_pumpkin_stem"],
+    ["dirt", "azalea", "rooted_dirt"]
+    //todo
+  ];
 
   // src/view/connection/links.ts
   var links = /* @__PURE__ */ new Map();
@@ -69928,6 +69978,9 @@
   });
   useItem.forEach(([input, item, output]) => {
     mirrorLinks(input, output, "useItem", item);
+  });
+  blockChange.forEach(([input, block, output]) => {
+    mirrorLinks(input, output, "changeBlock", block);
   });
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((ingredient, inputIndex) => {

@@ -15,6 +15,7 @@ export const Processes
     breakBlock:[],
     place:[],
     useItem:[],
+    changeBlock:[],
     transform:[],
 
     killEntity:[],

@@ -2,6 +2,7 @@ import { CookieMap } from "../breakResult/cookieMap"
 import { BlockName } from "../object/blockNames"
 import { Id } from "../object/id"
 import { ItemName, itemNames } from "../object/itemNames"
+import { blockChange } from "../transformation/blockChange"
 import { ChestName } from "../transformation/chestLoot"
 import { entityLoot, EntityName, isEntity } from "../transformation/entityLoot"
 import { placement } from "../transformation/place"
@@ -47,6 +48,9 @@ useTool.forEach(([input,tool,output])=>{
 })
 useItem.forEach(([input,item,output])=>{
     mirrorLinks(input,output,"useItem",item)
+})
+blockChange.forEach(([input,block,output])=>{
+    mirrorLinks(input,output,"changeBlock",block)
 })
 recipes.forEach(recipe=>{
     recipe.ingredients.forEach((ingredient,inputIndex)=>{
