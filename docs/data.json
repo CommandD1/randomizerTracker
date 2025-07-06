@@ -2429,5 +2429,14 @@
     ],
     "book": [
         "enchanting_table"
+    ],
+    "pale_oak_hanging_sign": [
+        "phantom_membrane"
+    ],
+    "bamboo_hanging_sign": [
+        "cherry_log"
+    ],
+    "cherry_log": [
+        "music_disc_blocks"
     ]
 }

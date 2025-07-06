@@ -48,6 +48,7 @@ function getUrlId():Id{
         id = searchParams.get("id") as Id;
     }else{
         searchParams.set("id",id)
+        searchParams.set("depth","3")
         window.location.href = window.location.pathname + '?' + searchParams.toString();
     }
     return id

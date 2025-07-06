@@ -71707,6 +71707,7 @@
       id3 = searchParams.get("id");
     } else {
       searchParams.set("id", id3);
+      searchParams.set("depth", "3");
       window.location.href = window.location.pathname + "?" + searchParams.toString();
     }
     return id3;
