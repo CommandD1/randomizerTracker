@@ -69979,7 +69979,7 @@
       }
     });
     chestItemLoot.forEach((items, chest) => {
-      if (items.includes(drop)) {
+      if (items.includes(itemName)) {
         mirrorLinks(chest, drop, "lootChest", itemName);
       }
     });

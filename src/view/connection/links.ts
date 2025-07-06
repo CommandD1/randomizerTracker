@@ -98,7 +98,7 @@ export function addLink(itemName:Id,drop:Id){
         }
     })
     chestItemLoot.forEach((items,chest)=>{
-        if(items.includes(drop as ItemName)){
+        if(items.includes(itemName as ItemName)){
             mirrorLinks(chest,drop,"lootChest",itemName);
         }
     })
