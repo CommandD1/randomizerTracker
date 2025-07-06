@@ -70103,6 +70103,7 @@
   }
 
   // src/view/tree/doubleTree.ts
+  var cookiemap = new CookieMap("break");
   var doubleTree = class {
     width = 1250;
     height = 530;
@@ -70112,6 +70113,8 @@
     linkPictureSize = 15;
     nodeHeightPadding = 40;
     nodeWidthPadding = 5;
+    upG;
+    downG;
     constructor(id3) {
       this.drawGraph(id3);
     }
@@ -70153,7 +70156,7 @@
       });
       const images = g.selectAll(".link-image").data(root2.links()).enter().append("image").attr("class", "link-image").attr("href", (d) => d.target.data.processId === void 0 ? "" : `assets/${imageName(d.target.data.processId)}.png`).attr("width", this.linkPictureSize).attr("height", this.linkPictureSize).attr("x", (d) => ((d.source.x ?? 0) + (d.target.x ?? 0) + this.rectWidth - this.linkPictureSize) / 2).attr("y", (d) => (flip * ((d.source.y ?? 0) + (d.target.y ?? 0)) + this.rectHeight - this.linkPictureSize) / 2);
       const node = g.selectAll(".node").data(root2.descendants()).enter().append("g").attr("class", "node").attr("transform", (d) => `translate(${d.x ?? 0 - this.rectWidth / 2}, ${flip * (d.y ?? 0)})`);
-      node.append("rect").attr("width", this.rectWidth).attr("height", this.rectHeight).attr("fill", "#aaaaaa").attr("stroke", "#555").attr("rx", 6).attr("ry", 6);
+      node.append("rect").attr("width", this.rectWidth).attr("height", this.rectHeight).attr("fill", "#aaaaaa").attr("stroke", (d) => cookiemap.get(d.data.name).length ? "#ffaa00" : "#555").attr("rx", 6).attr("ry", 6);
       const tooltip = select_default2("#tooltip");
       node.append("image").attr("href", (d) => `assets/${imageName(d.data.name)}.png`).attr("x", this.rectWidth / 2 - this.nodePictureSize / 2).attr("y", this.rectHeight / 2 - this.nodePictureSize / 2).attr("width", this.nodePictureSize).attr("height", this.nodePictureSize).on("click", (event, d) => {
         const searchParams = new URLSearchParams(window.location.search);

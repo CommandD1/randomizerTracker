@@ -5,6 +5,7 @@ import { Process } from "../connection/process";
 import { getDepth, updateId } from "../main";
 import { Names } from "../connection/links";
 import { imageName } from "../imageName";
+import { CookieMap } from "../breakResult/cookieMap";
 export interface TreeNode {
   processName?: Process;
   processId?: Id
@@ -12,7 +13,7 @@ export interface TreeNode {
   children?: TreeNode[];
   color?:string;
 }
-
+const cookiemap = new CookieMap("break")
 export class doubleTree{
     width = 1250;
     height = 530;
@@ -22,6 +23,8 @@ export class doubleTree{
     linkPictureSize = 15;
     nodeHeightPadding = 40;
     nodeWidthPadding = 5;
+    upG?:d3.Selection<SVGGElement, unknown, null, undefined>
+    downG?:d3.Selection<SVGGElement, unknown, null, undefined>
     constructor(id:Id){
        this.drawGraph(id)
     }
@@ -106,13 +109,16 @@ export class doubleTree{
             .append("g")
             .attr("class", "node")
             .attr("transform", d => `translate(${d.x??0 - this.rectWidth / 2}, ${flip*(d.y??0)})`);
-         node.append("rect")
+        node.append("rect")
             .attr("width", this.rectWidth)
             .attr("height", this.rectHeight)
             .attr("fill", "#aaaaaa")
-            .attr("stroke", "#555")
+            .attr("stroke", (d:any)=>cookiemap.get(d.data.name).length ? "#ffaa00" : "#555")
+            //.attr("stroke", "#555")
             .attr("rx", 6)
             .attr("ry", 6);
+
+        
         const tooltip = d3.select("#tooltip");
         node.append("image")
             .attr("href", d => `assets/${imageName(d.data.name)}.png`)
