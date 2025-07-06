@@ -51916,10 +51916,10 @@
       return this.count.get(id3);
     }
     toItemCount() {
-      return Array.from(this.count).map(([id3, count2]) => {
+      return Array.from(this.count).map(([id3, count3]) => {
         return {
           id: id3,
-          count: count2
+          count: count3
         };
       });
     }
@@ -69657,7 +69657,7 @@
         {
           const createConnection = (lastIngredient) => {
             recipes.push({
-              ingredients: [...count2.toItemCount(), {
+              ingredients: [...count3.toItemCount(), {
                 id: lastIngredient,
                 count: 1
               }],
@@ -69665,7 +69665,7 @@
               process: recipe.ingredients.length > 4 ? "craftingTable" : "inventoryCrafting"
             });
           };
-          const count2 = new Count();
+          const count3 = new Count();
           recipe.ingredients.forEach((ingredient, index) => {
             if (index === recipe.ingredients.length - 1) {
               if (typeof ingredient === "object") {
@@ -69684,7 +69684,7 @@
               throw "shapeless option overflow";
             }
             if (isItem(ingredient)) {
-              count2.add(ingredient);
+              count3.add(ingredient);
             } else {
               throw "tag to early in crafting_shapeless";
             }
@@ -69693,7 +69693,7 @@
         return;
       case "crafting_shaped":
         {
-          const count2 = new Count();
+          const count3 = new Count();
           let craftingTable = false;
           if (recipe.pattern.length === 3) craftingTable = true;
           recipe.pattern.forEach((layer) => {
@@ -69701,14 +69701,14 @@
             if (row.length === 3) craftingTable = true;
             row.forEach((letter) => {
               if (letter === " ") return;
-              count2.add(letter);
+              count3.add(letter);
             });
           });
           const possibleIngredients = Object.entries(recipe.key);
           const countIngredients = (ingredients, index) => {
             if (index === possibleIngredients.length) {
               recipes.push({
-                ingredients: count2.mappedItemCount(ingredients),
+                ingredients: count3.mappedItemCount(ingredients),
                 result: recipe.result,
                 process: craftingTable ? "craftingTable" : "inventoryCrafting"
               });
@@ -69835,10 +69835,10 @@
   });
 
   // src/view/connection/connection.ts
-  function addCount({ id: id3, count: count2 }) {
+  function addCount({ id: id3, count: count3 }) {
     return {
       id: id3,
-      count: count2 === void 0 ? 1 : count2
+      count: count3 === void 0 ? 1 : count3
     };
   }
   var connections = [
@@ -71739,5 +71739,17 @@
     tree.drawGraph(id3);
     updateId(id3);
   });
-  console.log(imageName("pig"));
+  var cookiemap2 = new CookieMap("break");
+  var count2 = 0;
+  var total = 0;
+  itemNames.forEach((item) => {
+    if (isBlock(item)) {
+      total++;
+      if (cookiemap2.get(item).length) {
+        count2++;
+      }
+    }
+  });
+  var percentage = (count2 / total * 100).toFixed(1);
+  console.log(`${percentage} percent mined`);
 })();

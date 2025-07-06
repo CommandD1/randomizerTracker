@@ -2,7 +2,7 @@ import Connection, { addCount, ItemCount } from "./connection/connection";
 import Count from "./connection/countItems";
 import esbuild from "esbuild"
 import { isItem, ItemName, itemNames } from "./object/itemNames";
-import { BlockName, blockNames } from "./object/blockNames";
+import { BlockName, blockNames, isBlock } from "./object/blockNames";
 import imageSearch from "./imageSearch";
 import { TagName, tagToItems } from "./object/tags";
 import { place } from "./transformation/place";
@@ -74,7 +74,19 @@ window.addEventListener("popstate",(event)=>{
   tree.drawGraph(id)
   updateId(id)
 })
-console.log(imageName("pig"))
+let cookiemap = new CookieMap("break")
+let count = 0;
+let total = 0;
+itemNames.forEach(item=>{
+  if(isBlock(item)){
+    total++;
+    if(cookiemap.get(item).length){
+      count++;
+    }
+  }
+})
+let percentage = (count/total*100).toFixed(1)
+console.log(`${percentage} percent mined`)
 /*
 interface TreeNode {
   id: string;
