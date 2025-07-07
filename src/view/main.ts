@@ -100,16 +100,20 @@ window.addEventListener("popstate",(event)=>{
 let cookiemap = new CookieMap("break")
 let count = 0;
 let total = 0;
+let missing:string[] = []
 itemNames.forEach(item=>{
   if(isBlock(item)){
     total++;
     if(cookiemap.get(item).length){
       count++;
+    }else{
+      missing.push(item)
     }
   }
 })
 let percentage = (count/total*100).toFixed(1)
 console.log(`${percentage} percent mined`)
+console.log(missing)
 /*
 interface TreeNode {
   id: string;

@@ -71759,14 +71759,18 @@
   var cookiemap2 = new CookieMap("break");
   var count2 = 0;
   var total = 0;
+  var missing = [];
   itemNames.forEach((item) => {
     if (isBlock(item)) {
       total++;
       if (cookiemap2.get(item).length) {
         count2++;
+      } else {
+        missing.push(item);
       }
     }
   });
   var percentage = (count2 / total * 100).toFixed(1);
   console.log(`${percentage} percent mined`);
+  console.log(missing);
 })();
